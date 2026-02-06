@@ -75,6 +75,27 @@ def login():
     flash("Invalid credentials", "danger")
     return redirect(url_for('index'))
 
+@app.route('/register', methods=['POST'])
+def register():
+    user = request.form.get('new_user')
+    pwd = request.form.get('new_pass')
+    
+    if not user or not pwd:
+        flash("Please fill in all fields.", "danger")
+        return redirect(url_for('index'))
+
+    try:
+        with sqlite3.connect('ngo.db') as conn:
+            conn.execute('INSERT INTO users (username, password) VALUES (?, ?)', (user, pwd))
+        flash("Account created! You can now login.", "success")
+    except sqlite3.IntegrityError:
+        flash("Username already exists.", "danger")
+    except Exception as e:
+        flash(f"An error occurred: {e}", "danger")
+        
+    # This line ensures you stay on the login page
+    return redirect(url_for('index'))
+
 @app.route('/logout')
 def logout():
     session.clear()
