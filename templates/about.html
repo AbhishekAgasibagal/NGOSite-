@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | RISE NGO</title>
+    <style>
+        /* --- ALL-IN-ONE PROFESSIONAL CSS --- */
+        :root {
+            --primary: #007bff;
+            --accent-green: #2d5a27;   
+            --warm-bg: #fdfaf5;       
+            --white: #ffffff;
+            --text-dark: #1a1a1a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--warm-bg); color: var(--text-dark); overflow-x: hidden; }
+
+        /* HEADER */
+        .main-header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 15px 8%; background: var(--white); box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
+        }
+        .logo-img { height: 45px; }
+        .nav-links { display: flex; list-style: none; gap: 30px; }
+        .nav-links a { text-decoration: none; color: #444; font-weight: 600; transition: 0.3s; }
+        .nav-links a:hover { color: var(--primary); }
+
+        /* FULL SCREEN BANNER */
+        .hero-story {
+            width: 100%;
+            height: 450px;
+            position: relative;
+            background: #222;
+        }
+        .hero-story img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures image fills the width without gaps */
+        }
+        .hero-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center;
+        }
+        .hero-overlay h1 { color: white; font-size: 3.5rem; text-transform: uppercase; letter-spacing: 2px; }
+
+        /* MISSION & VISION BOXES */
+        .container { 
+            max-width: 1100px; margin: -60px auto 60px; 
+            padding: 0 20px; position: relative; z-index: 10;
+        }
+        .grid-2 { 
+            display: flex; gap: 30px; justify-content: center; 
+        }
+        .info-box { 
+            flex: 1; background: var(--white); padding: 50px 30px; border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08); text-align: center;
+            border-top: 6px solid var(--accent-green); 
+            transition: all 0.4s ease;
+        }
+
+        .info-box:hover { 
+            transform: translateY(-15px); 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2); 
+            border-top-color: var(--primary); 
+        }
+
+        .info-box h3 { font-size: 1.6rem; color: var(--accent-green); margin-bottom: 15px; }
+        .info-box p { color: #555; line-height: 1.7; }
+
+        /* IMPACT BAR */
+        .impact-bar { 
+            background: #111; color: white; padding: 60px 8%; 
+            display: flex; justify-content: space-around; text-align: center; 
+        }
+        .stat-item h2 { font-size: 3rem; color: var(--primary); margin-bottom: 5px; }
+        .stat-item p { text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; color: #bbb; }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" class="logo-img" alt="RISE Logo">
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/home">Home</a></li>
+                <li><a href="/about">About Us</a></li>
+                                <li><a href="/media">Media</a></li>
+
+                <li><a href="/projects">Our Projects</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero-story">
+        <img src="{{ url_for('static', filename='images/banner.jpg') }}" alt="Our Journey">
+        <div class="hero-overlay">
+            <h1>Our Story</h1>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="grid-2">
+            <div class="info-box">
+                <h3>Who Are We</h3>
+                <p>{{ data.mission }}</p>
+            </div>
+            <div class="info-box">
+                <h3>About Us</h3>
+                <p>{{ data.vision }}</p>
+            </div>
+        </div>
+    </div>
+
+    <section class="impact-bar">
+        {% for stat in data.stats %}
+        <div class="stat-item">
+            <h2>{{ stat.value }}</h2>
+            <p>{{ stat.label }}</p>
+        </div>
+        {% endfor %}
+    </section>
+
+</body>
+</html>
