@@ -39,3 +39,70 @@ button[type="submit"] {
     background: var(--blue); color: white; border: none;
     padding: 10px 20px; border-radius: 5px; cursor: pointer;
 }
+
+
+.admin-card {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    margin-top: 20px;
+}
+
+.admin-section h1 {
+    color: #007bff;
+    font-size: 24px;
+    margin-bottom: 25px;
+    text-align: center;
+    font-weight: 700;
+}
+
+/* Labels and Inputs */
+.admin-card label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+    font-size: 14px;
+}
+
+.admin-card input[type="text"],
+.admin-card input[type="date"],
+.admin-card select,
+.admin-card textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+.admin-card input:focus,
+.admin-card textarea:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.admin-card input[type="file"] {
+    padding: 10px 0;
+    margin-bottom: 25px;
+}
+
+.admin-card button[type="submit"] {
+    width: 100%;
+    padding: 14px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.admin-card button:hover {
+    background-color: #0056b3;
+}
