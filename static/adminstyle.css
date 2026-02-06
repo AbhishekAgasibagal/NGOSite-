@@ -1,0 +1,41 @@
+:root {
+    --dark: #1a1c23;
+    --blue: #007bff;
+    --bg: #f4f7f6;
+}
+
+body { margin: 0; font-family: sans-serif; background: var(--bg); }
+
+.admin-wrapper { display: flex; height: 100vh; }
+
+.admin-sidebar {
+    width: 250px; background: var(--dark); color: white;
+    padding: 20px; display: flex; flex-direction: column;
+}
+
+.menu-btn {
+    background: none; border: none; color: #ccc;
+    padding: 15px; text-align: left; cursor: pointer;
+    font-size: 16px; border-radius: 5px; margin-bottom: 5px;
+}
+
+.menu-btn.active, .menu-btn:hover {
+    background: var(--blue); color: white;
+}
+
+.admin-content { flex: 1; padding: 40px; overflow-y: auto; }
+
+.admin-section {
+    background: white; padding: 30px; border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+input[type="text"] {
+    width: 100%; padding: 10px; margin: 10px 0 20px;
+    border: 1px solid #ddd; border-radius: 5px;
+}
+
+button[type="submit"] {
+    background: var(--blue); color: white; border: none;
+    padding: 10px 20px; border-radius: 5px; cursor: pointer;
+}

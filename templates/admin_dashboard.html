@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='adminstyle.css') }}">
+</head>
+<body>
+
+<div class="admin-wrapper">
+    <aside class="admin-sidebar">
+        <h2 class="admin-logo">NGO Admin</h2>
+        <nav>
+            <button class="menu-btn active" onclick="showSection('home')">🏠 Dashboard Home</button>
+            <button class="menu-btn" onclick="showSection('manage-home')">📄 Manage Home Page</button>
+            <button class="menu-btn" onclick="showSection('about')">👥 Manage About Us</button>
+            <button class="menu-btn" onclick="showSection('work')">📂 Projects</button>
+            <a href="/logout" class="menu-btn" style="text-decoration: none; display: block; margin-top: 20px;">🚪 Logout</a>
+        </nav>
+    </aside>
+
+    <main class="admin-content">
+        <section id="home" class="admin-section active">
+            <h1>Dashboard Overview</h1>
+            <p>Welcome, {{ session['user'] }}! Select an option from the sidebar to begin editing.</p>
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                <p style="color: #2d5a27; font-weight: bold; background: #e8f5e9; padding: 10px; border-radius: 5px; margin-top: 15px;">
+                    ✅ {{ messages[0] }}
+                </p>
+              {% endif %}
+            {% endwith %}
+        </section>
+
+        <section id="manage-home" class="admin-section" style="display:none;">
+            <h1>Manage Home Page</h1>
+            <form method="post">
+                <label>Banner Title</label>
+                <input type="text" name="banner_title" value="{{ content.banner_title }}">
+                
+                <label>Mission Preview (Home Card)</label>
+                <input type="text" name="mission" value="{{ content.mission }}">
+                
+                <label>Vision Preview (Home Card)</label>
+                <input type="text" name="vision" value="{{ content.vision }}">
+                
+                <button type="submit">Save Home Changes</button>
+            </form>
+        </section>
+
+        <section id="about" class="admin-section" style="display:none;">
+            <h1>Manage About Us</h1>
+            <p>Update your NGO's main story and impact statements.</p>
+            <form method="post" style="margin-top: 20px;">
+                <label>Who are we Statement</label>
+                <textarea name="mission" style="width: 100%; height: 100px; padding: 10px; border-radius: 5px; border: 1px solid #ddd; margin-bottom: 20px;">{{ content.mission }}</textarea>
+                
+                <label>About us Statement</label>
+                <textarea name="vision" style="width: 100%; height: 100px; padding: 10px; border-radius: 5px; border: 1px solid #ddd; margin-bottom: 20px;">{{ content.vision }}</textarea>
+                
+                <button type="submit">Update About Page</button>
+            </form>
+        </section>
+
+        <section id="work" class="admin-section" style="display:none;">
+            <h1>Projects</h1>
+            <p>Add or remove NGO work projects.</p>
+            <div style="background: #fff; padding: 20px; border: 1px dashed #ccc; text-align: center; margin-top: 20px;">
+                <p>Project management module coming soon.</p>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script>
+function showSection(id) {
+    document.querySelectorAll(".admin-section").forEach(s => s.style.display = "none");
+    document.getElementById(id).style.display = "block";
+    
+    document.querySelectorAll(".menu-btn").forEach(b => b.classList.remove("active"));
+    
+    if (event && event.currentTarget) {
+        event.currentTarget.classList.add("active");
+    }
+}
+</script>
+
+</body>
+</html>
