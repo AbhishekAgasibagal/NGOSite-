@@ -97,6 +97,22 @@ body { font-family: 'Segoe UI', sans-serif; background: var(--bg); }
     margin-top: 30px;
 }
 
+
+.video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%; 
+    padding-top: 25px;
+    height: 0;
+    margin-bottom: 20px;
+}
+.video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
 .stat-box {
     background: #004d4d;
     color: white;
