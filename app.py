@@ -63,6 +63,23 @@ def index():
 def home():
     return render_template('index.html', content=page_content)
 
+
+@app.route('/about')
+def about():
+    about_info = {
+        "mission": page_content["mission"],
+        "vision": page_content["vision"],
+        "stats": page_content["stats"]
+    }
+    return render_template('about.html', data=about_info)
+
+@app.route('/projects')
+def projects():
+    with sqlite3.connect('ngo.db') as conn:
+        conn.row_factory = sqlite3.Row
+        all_projects = conn.execute('SELECT * FROM projects ORDER BY id DESC').fetchall()
+    return render_template('projects.html', projects=all_projects)
+    
 @app.route('/login', methods=['POST'])
 def login():
     user = request.form.get('user')
@@ -238,3 +255,4 @@ def media_page():
 if __name__ == '__main__':
     Timer(1.5, open_browser).start()
     app.run(debug=True, use_reloader=False)
+
