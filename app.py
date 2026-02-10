@@ -53,7 +53,6 @@ def init_db():
 
 init_db()
 
-# --- AUTH ROUTES ---
 
 @app.route('/')
 def index():
@@ -118,7 +117,6 @@ def logout():
     session.clear()
     return redirect(url_for('index'))
 
-# --- ADMIN DASHBOARD ---
 
 @app.route('/admin', methods=['GET', 'POST'])
 def admin_page():
@@ -148,7 +146,6 @@ def admin_page():
                            gallery=db_gallery,
                            videos=db_videos)
 
-# --- PROJECT MANAGEMENT ---
 
 @app.route('/save_project', methods=['POST'])
 def save_project():
@@ -176,7 +173,6 @@ def delete_project(id):
         conn.execute('DELETE FROM projects WHERE id = ?', (id,))
     return redirect(url_for('admin_page'))
 
-# --- MEDIA MANAGEMENT ROUTES (New) ---
 
 @app.route('/add_press', methods=['POST'])
 def add_press():
@@ -220,7 +216,6 @@ def add_video():
     flash("Video link saved!", "success")
     return redirect(url_for('admin_page'))
 
-# --- DELETE ROUTES FOR MEDIA ---
 
 @app.route('/delete_press/<int:id>')
 def delete_press(id):
@@ -252,7 +247,8 @@ def media_page():
                            videos=db_videos)
 
 
-if __name__ == '__main__':
-    Timer(1.5, open_browser).start()
-    app.run(debug=True, use_reloader=False)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
+
+
 
