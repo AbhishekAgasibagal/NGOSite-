@@ -29,13 +29,16 @@ def open_browser():
 
 def init_db():
     with sqlite3.connect('ngo.db') as conn:
+        
         conn.execute('''CREATE TABLE IF NOT EXISTS users 
                         (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT UNIQUE NOT NULL, password TEXT NOT NULL)''')
+        
         
         conn.execute('''CREATE TABLE IF NOT EXISTS projects 
                         (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, description TEXT, 
                         status TEXT, start_date TEXT, end_date TEXT, location TEXT, image TEXT)''')
 
+        
         conn.execute('''CREATE TABLE IF NOT EXISTS press_releases 
                         (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, date TEXT, description TEXT)''')
         
@@ -51,6 +54,7 @@ def init_db():
 init_db()
 
 
+
 @app.route('/')
 def index():
     return render_template('login.html')
@@ -59,23 +63,6 @@ def index():
 def home():
     return render_template('index.html', content=page_content)
 
-
-@app.route('/about')
-def about():
-    about_info = {
-        "mission": page_content["mission"],
-        "vision": page_content["vision"],
-        "stats": page_content["stats"]
-    }
-    return render_template('about.html', data=about_info)
-
-@app.route('/projects')
-def projects():
-    with sqlite3.connect('ngo.db') as conn:
-        conn.row_factory = sqlite3.Row
-        all_projects = conn.execute('SELECT * FROM projects ORDER BY id DESC').fetchall()
-    return render_template('projects.html', projects=all_projects)
-    
 @app.route('/login', methods=['POST'])
 def login():
     user = request.form.get('user')
@@ -106,13 +93,14 @@ def register():
     except Exception as e:
         flash(f"An error occurred: {e}", "danger")
         
-    # This line ensures you stay on the login page
+    
     return redirect(url_for('index'))
 
 @app.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for('index'))
+
 
 
 @app.route('/admin', methods=['GET', 'POST'])
@@ -142,6 +130,7 @@ def admin_page():
                            coverage=db_coverage,
                            gallery=db_gallery,
                            videos=db_videos)
+
 
 
 @app.route('/save_project', methods=['POST'])
@@ -214,6 +203,7 @@ def add_video():
     return redirect(url_for('admin_page'))
 
 
+
 @app.route('/delete_press/<int:id>')
 def delete_press(id):
     with sqlite3.connect('ngo.db') as conn:
@@ -231,7 +221,7 @@ def delete_gallery(id):
 def media_page():
     with sqlite3.connect('ngo.db') as conn:
         conn.row_factory = sqlite3.Row
-        # Fetching all data to display on the frontend
+        
         db_press = conn.execute('SELECT * FROM press_releases ORDER BY id DESC').fetchall()
         db_coverage = conn.execute('SELECT * FROM media_coverage ORDER BY id DESC').fetchall()
         db_gallery = conn.execute('SELECT * FROM gallery ORDER BY id DESC').fetchall()
@@ -244,9 +234,6 @@ def media_page():
                            videos=db_videos)
 
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
-
-
-
-
+if __name__ == '__main__':
+    Timer(1.5, open_browser).start()
+    app.run(debug=True, use_reloader=False)
